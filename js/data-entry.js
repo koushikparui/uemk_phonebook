@@ -13,26 +13,45 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-function login(e) {
-	e.preventDefault();
+firebase.auth().onAuthStateChanged(function (user) {
+	if (!user) {
+		// No user is signed in.
+		window.location.href = "/login.html";
+	}
+});
 
+function submit(e) {
+	e.preventDefault();
+	const name = document.getElementById("name").value;
+	const codeName = document.getElementById("codeName").value;
+	const department = document.getElementById("department").value;
 	const email = document.getElementById("email").value;
-	const password = document.getElementById("password").value;
+	const phone = document.getElementById("phone").value;
+	const hod = document.forms["dataentryform"]["hodbtn"].value;
+
 	const alertbox = document.getElementById("alertbox");
 
 	firebase
-		.auth()
-		.signInWithEmailAndPassword(email, password)
+		.database()
+		.ref("/phonebook/")
+		.push({
+			name,
+			codeName,
+			department,
+			email,
+			phone,
+			hod,
+		})
 		.then(() => {
 			alertbox.classList.add("alert-success");
-			alertbox.innerHTML = "Login successful..";
+			alertbox.innerHTML = "Record added successfully...";
 			alertbox.style.display = "block";
-			window.location.href = "/data-entry.html";
 			setTimeout(() => {
 				alertbox.classList.remove("alert-success");
 				alertbox.innerHTML = "";
 				alertbox.style.display = "none";
 			}, 2000);
+			document.forms["dataentryform"].reset();
 		})
 		.catch((err) => {
 			alertbox.classList.add("alert-danger");
@@ -46,4 +65,7 @@ function login(e) {
 		});
 }
 
-document.getElementById("loginform").addEventListener("submit", login);
+document.getElementById("dataentryform").addEventListener("submit", submit);
+document
+	.getElementById("cancelbtn")
+	.addEventListener("click", () => document.forms["dataentryform"].reset());
