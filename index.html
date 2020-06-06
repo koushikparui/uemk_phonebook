@@ -42,7 +42,16 @@
 			style="height: 70vh; background: grey;"
 		>
 			<form id="searchForm">
-				<div id="search" class="col-lg-4" style="padding-top: 50px;">
+				
+				
+				<div class="form-group col-lg-3" style="padding-top: 50px;">
+					<select class="form-control" id="Filter">
+					  <option>Search By Name</option>
+					  <option>Search By Code Name</option>
+					  <option>Search By Department</option>
+					</select>
+				  </div>
+				<div id="search" class="col-lg-4" >
 					<input
 						style="border-radius: 20px;"
 						type="text"
@@ -61,7 +70,10 @@
 						alt=""
 					/>
 				</div>
+
+			
 				<button class="btn btn-success" type="submit">Search</button>
+				
 				<button type="button" id="cancelSearch" class="btn btn-danger">
 					Cancel
 				</button>
