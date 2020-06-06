@@ -13,12 +13,16 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+const mainData = [];
+
 function displayData(dataObj) {
 	const tableBody = document.querySelector("#tablebody");
 	var newData = "";
 	for (const entries in dataObj) {
 		if (dataObj.hasOwnProperty(entries)) {
 			const data = dataObj[entries];
+			mainData.push(data);
+
 			newData += `<tr>
 						<td>${data.name}</td>
 						<td>${data.codeName}</td>
@@ -29,13 +33,64 @@ function displayData(dataObj) {
 		}
 	}
 	tableBody.innerHTML = newData;
+	document.getElementsByClassName("loader")[0].style.display = "none";
+	document.getElementsByClassName("non-loader")[0].style.visibility =
+		"visible";
+	console.log(mainData);
 }
 
-(function getData() {
+function getData() {
 	firebase
 		.database()
 		.ref("/phonebook/")
 		.on("value", (snapshot) => {
 			displayData(snapshot.val());
 		});
-})();
+}
+
+function searchData(e) {
+	e.preventDefault();
+	const tableBody = document.querySelector("#tablebody");
+	const searchVal = document.getElementById("searchVal").value;
+	const filteredData = mainData.filter((data) =>
+		data.name.toLowerCase().includes(searchVal.toLowerCase())
+	);
+	if (filteredData.length === 0) {
+		document.getElementById("notFoundMessage").innerText =
+			"Search value didn't match any record";
+		document.getElementById("notFoundMessage").style.display = "block";
+		return;
+	}
+	tableBody.innerHTML = "";
+	document.getElementById("notFoundMessage").style.display = "none";
+
+	filteredData.map((data) => {
+		tableBody.innerHTML += `<tr>
+						<td>${data.name}</td>
+						<td>${data.codeName}</td>
+						<td>${data.department}</td>
+						<td><a href="mailto:${data.email}">${data.email}</a></td>
+						<td><a href="tel:${data.phone}">${data.phone}</a></td>
+					</tr>`;
+	});
+}
+
+function cancelSearch() {
+	const tableBody = document.querySelector("#tablebody");
+	document.getElementById("searchVal").value = "";
+	tableBody.innerHTML = "";
+
+	mainData.map((data) => {
+		tableBody.innerHTML += `<tr>
+						<td>${data.name}</td>
+						<td>${data.codeName}</td>
+						<td>${data.department}</td>
+						<td><a href="mailto:${data.email}">${data.email}</a></td>
+						<td><a href="tel:${data.phone}">${data.phone}</a></td>
+					</tr>`;
+	});
+}
+
+window.addEventListener("load", getData);
+document.getElementById("searchForm").addEventListener("submit", searchData);
+document.getElementById("cancelSearch").addEventListener("click", cancelSearch);
