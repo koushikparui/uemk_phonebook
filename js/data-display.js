@@ -15,13 +15,33 @@ firebase.analytics();
 
 const mainData = [];
 
+function checkLoggedIn() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      const elements = Array.from(document.getElementsByClassName("adminOnly"));
+      elements.map((element) => {
+        element.classList.remove("adminOnly");
+      });
+    }
+  });
+}
+
+function deleteData(id) {
+  firebase
+    .database()
+    .ref("/phonebook/" + id)
+    .remove()
+    .then((res) => alert("Data removed"))
+    .catch((err) => {});
+}
+
 function displayData(dataObj) {
   const tableBody = document.querySelector("#tablebody");
   var newData = "";
   for (const entries in dataObj) {
     if (dataObj.hasOwnProperty(entries)) {
       const data = dataObj[entries];
-      mainData.push(data);
+      mainData.push({ id: entries, data });
 
       newData += `<tr>
 						<td>${data.name}</td>
@@ -29,10 +49,13 @@ function displayData(dataObj) {
 						<td>${data.department}</td>
 						<td><a href="mailto:${data.email}">${data.email}</a></td>
             <td><a href="tel:${data.phone}">${data.phone}</a></td>
-            <td> <button type="button" id="" class="btn btn-danger">x</td>
+            <td> <button type="button" onclick="deleteData('${entries}')" class="btn btn-danger adminOnly">x</td>
 					</tr>`;
     }
   }
+
+  checkLoggedIn();
+
   tableBody.innerHTML = newData;
   document.getElementsByClassName("loader")[0].style.display = "none";
   document.getElementsByClassName("non-loader")[0].style.visibility = "visible";
@@ -53,7 +76,7 @@ function searchData(e) {
   const searchVal = document.getElementById("searchVal").value;
   const filterOption = document.getElementById("filterOption").value;
 
-  const filteredData = mainData.filter((data) =>
+  const filteredData = mainData.filter(({ data }) =>
     data[filterOption].toLowerCase().includes(searchVal.toLowerCase())
   );
   if (filteredData.length === 0) {
@@ -65,13 +88,15 @@ function searchData(e) {
   tableBody.innerHTML = "";
   document.getElementById("notFoundMessage").style.display = "none";
 
-  filteredData.map((data) => {
+  filteredData.map(({ data, id }) => {
     tableBody.innerHTML += `<tr>
 						<td>${data.name}</td>
 						<td>${data.codeName}</td>
 						<td>${data.department}</td>
 						<td><a href="mailto:${data.email}">${data.email}</a></td>
-						<td><a href="tel:${data.phone}">${data.phone}</a></td>
+            <td><a href="tel:${data.phone}">${data.phone}</a></td>
+            <td> <button type="button" onclick="deleteData('${id}')" class="btn btn-danger adminOnly">x</td>
+            
 					</tr>`;
   });
 }
@@ -81,14 +106,15 @@ function cancelSearch() {
   document.getElementById("searchVal").value = "";
   tableBody.innerHTML = "";
 
-  mainData.map((data) => {
+  mainData.map(({ data, id }) => {
     tableBody.innerHTML += `<tr>
 						<td>${data.name}</td>
 						<td>${data.codeName}</td>
 						<td>${data.department}</td>
 						<td><a href="mailto:${data.email}">${data.email}</a></td>
 						<td><a href="tel:${data.phone}">${data.phone}</a></td>
-            <td> <button type="button" id="" class="btn btn-danger">x</td>
+            <td> <button type="button" onclick="deleteData('${id}')" class="btn btn-danger adminOnly">x</td>
+
           </tr>`;
   });
 }
