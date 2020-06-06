@@ -28,7 +28,8 @@ function displayData(dataObj) {
 						<td>${data.codeName}</td>
 						<td>${data.department}</td>
 						<td><a href="mailto:${data.email}">${data.email}</a></td>
-						<td><a href="tel:${data.phone}">${data.phone}</a></td>
+            <td><a href="tel:${data.phone}">${data.phone}</a></td>
+            <td> <button type="button" id="" class="btn btn-danger">x</td>
 					</tr>`;
     }
   }
