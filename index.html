@@ -1,107 +1,93 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Home</title>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
 
-		<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
 
-		<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
 
-		<!-- Add Firebase products that you want to use -->
-		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
 
-		<!-- Latest compiled and minified CSS -->
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		/>
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
 
-		<!-- jQuery library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-		<!-- Popper JS -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-		<style>
-			.non-loader {
-				visibility: hidden;
-			}
-		</style>
-	</head>
-	<body>
-		<div
-			class="container-fluid col-12"
-			style="height: 70vh; background: grey;"
-		>
-			<form id="searchForm">
-				
-				
-				<div class="form-group col-lg-3" style="padding-top: 50px;">
-					<select class="form-control" id="Filter">
-					  <option>Search By Name</option>
-					  <option>Search By Code Name</option>
-					  <option>Search By Department</option>
-					</select>
-				  </div>
-				<div id="search" class="col-lg-4" >
-					<input
-						style="border-radius: 20px;"
-						type="text"
-						class="form-control"
-						placeholder="search"
-						id="searchVal"
-						autocomplete="off"
-					/><img
-						src="images/s.png"
-						style="
-							width: 1.6rem;
-							position: relative;
-							bottom: 2rem;
-							left: 89%;
-						"
-						alt=""
-					/>
-				</div>
+    <style>
+      .non-loader {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid col-12" style="height: 70vh; background: grey;">
+      <form id="searchForm">
+        <div class="form-group col-lg-3" style="padding-top: 50px;">
+          <select class="form-control" id="filterOption">
+            <option selected value="name">Search By Name</option>
+            <option value="codeName">Search By Code Name</option>
+            <option value="department">Search By Department</option>
+          </select>
+        </div>
+        <div id="search" class="col-lg-4">
+          <input
+            style="border-radius: 20px;"
+            type="text"
+            class="form-control"
+            placeholder="search"
+            id="searchVal"
+            autocomplete="off"
+          /><img
+            src="images/s.png"
+            style="width: 1.6rem; position: relative; bottom: 2rem; left: 89%;"
+            alt=""
+          />
+        </div>
 
-			
-				<button class="btn btn-success" type="submit">Search</button>
-				
-				<button type="button" id="cancelSearch" class="btn btn-danger">
-					Cancel
-				</button>
-			</form>
-		</div>
-		<div class="loader text-center">
-			<img src="images/loader.gif" style="width: 10%;" alt="" />
-		</div>
-		<div class="container non-loader" style="padding: 80px 0px 70px 0px;">
-			<h2 id="notFoundMessage" style="display: none;"></h2>
-			<table class="table table-striped table-hover table-responsive">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Code</th>
-						<th>Department</th>
-						<th>Email</th>
-						<th>Phone</th>
-					</tr>
-				</thead>
-				<tbody id="tablebody"></tbody>
-			</table>
-		</div>
+        <button class="btn btn-success" type="submit">Search</button>
 
-		<div
-			class="container-fluid"
-			style="height: 70vh; background: grey;"
-		></div>
-		<script src="js/data-display.js"></script>
-	</body>
+        <button type="button" id="cancelSearch" class="btn btn-danger">
+          Cancel
+        </button>
+      </form>
+    </div>
+    <div class="loader text-center">
+      <img src="images/loader.gif" style="width: 10%;" alt="" />
+    </div>
+    <div class="container non-loader" style="padding: 80px 0px 70px 0px;">
+      <h2 id="notFoundMessage" style="display: none;"></h2>
+      <table class="table table-striped table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody id="tablebody"></tbody>
+      </table>
+    </div>
+
+    <div class="container-fluid" style="height: 70vh; background: grey;"></div>
+    <script src="js/data-display.js"></script>
+  </body>
 </html>
