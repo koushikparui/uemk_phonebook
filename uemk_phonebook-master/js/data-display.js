@@ -44,12 +44,12 @@ function displayData(dataObj) {
       mainData.push({ id: entries, data });
 
       newData += `<tr>
-						<td class="rd-f">${data.name}</td>
+						<td>${data.name}</td>
 						<td>${data.codeName}</td>
 						<td>${data.department}</td>
-						<td><a href="tel:${data.phone}">${data.phone}</a></td>
-            <td class="rd-l"><a href="mailto:${data.email}">${data.email}</a></td>
-            <td class="blank"> <button type="button" onclick="deleteData('${entries}')" style= "border-radius:30px;"class="btn btn-danger adminOnly">x</button></td>
+						<td><a href="mailto:${data.email}">${data.email}</a></td>
+            <td><a href="tel:${data.phone}">${data.phone}</a></td>
+            <td> <button type="button" onclick="deleteData('${entries}')" class="btn btn-danger adminOnly">x</td>
 					</tr>`;
     }
   }

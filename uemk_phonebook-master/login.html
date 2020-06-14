@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Login</title>
+		<!-- Latest compiled and minified CSS -->
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		/>
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<style></style>
+	</head>
+	<body>
+		<div
+			class="container jumbotron col-lg-4 col-md-9 col-sm-9 col-9"
+			style="margin-top: 100px;"
+		>
+			<form id="loginform">
+				<div
+					class="alert"
+					style="display: none;"
+					role="alert"
+					id="alertbox"
+				></div>
+				<h1>Admin Panel</h1>
+				<div class="form-group">
+					<input
+						type="email"
+						class="form-control"
+						placeholder="Enter admin email"
+						id="email"
+					/>
+				</div>
+				<div class="form-group">
+					<input
+						type="password"
+						class="form-control"
+						placeholder="Enter password"
+						id="password"
+					/>
+				</div>
+				<div class="form-group form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" type="checkbox" />
+						Remember me
+					</label>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+
+		<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+
+		<!-- Add Firebase products that you want to use -->
+		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+
+		<script src="js/login.js"></script>
+	</body>
+</html>

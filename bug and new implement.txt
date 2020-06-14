@@ -1,0 +1,3 @@
+1. text box empty hoy fire  cancel and remove cancel btn
+2. on searching delete button is getting vanished
+3. Make the log out function
