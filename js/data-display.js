@@ -18,6 +18,8 @@ const mainData = [];
 function checkLoggedIn() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+      console.log(user);
+
       const elements = Array.from(document.getElementsByClassName("adminOnly"));
       elements.map((element) => {
         element.classList.remove("adminOnly");
@@ -72,6 +74,7 @@ function getData() {
 
 function searchData(e) {
   e.preventDefault();
+  checkLoggedIn();
   const tableBody = document.querySelector("#tablebody");
   const searchVal = document.getElementById("searchVal").value;
   const filterOption = document.getElementById("filterOption").value;
@@ -119,6 +122,23 @@ function cancelSearch() {
   });
 }
 
+function logout() {
+  firebase
+    .auth()
+    .signOut()
+    .then(function () {
+      window.location.href = "/";
+    })
+    .catch(function (error) {
+      alert("Error logging out");
+    });
+}
+
 window.addEventListener("load", getData);
 document.getElementById("searchForm").addEventListener("submit", searchData);
-document.getElementById("cancelSearch").addEventListener("click", cancelSearch);
+document.getElementById("searchVal").addEventListener("input", (e) => {
+  if (!e.target.value) {
+    cancelSearch();
+  }
+});
+document.getElementById("logoutBtn").addEventListener("click", logout);
