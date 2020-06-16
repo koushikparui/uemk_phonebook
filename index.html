@@ -53,6 +53,9 @@ function scrollFunction() {
 </script>
     <style>
       
+      img{
+        user-select: none;
+      }
       .non-loader {
         visibility: hidden;
       }
@@ -291,7 +294,7 @@ function scrollFunction() {
       }
     </style>
   </head>
-  <body>
+  <body ondragstart="return false">
     
     
     <div  class="container-fluid col-12 st-head" >
@@ -349,7 +352,7 @@ function scrollFunction() {
         <tbody id="tablebody"></tbody>
       </table>
     </div>
-    <div><button type="button" class="btn btn-primary adminOnly" id="logoutBtn">Logout</button></div>
+    <div><button type="button" class="btn btn-primary adminOnly" style="background: #00A99D;margin: 10px;" id="logoutBtn">Logout</button></div>
     <div class="container-fluid st-foot" >
     <div class="st-footicon">
    <a href="https://www.facebook.com/learnbird01"> <img class="st-scale"  src="images/fb.svg" alt=""></a>
